@@ -2,7 +2,7 @@ import React from 'react';
 
 function User(){
     return(
-        <h1>Halaman User</h1>
+        <h1>Halaman Pengguna</h1>
     );
 }
 
