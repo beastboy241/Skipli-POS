@@ -1,15 +1,16 @@
 import React from "react";
-import { Route, Navigate } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+import { useFirebase } from "./FirebaseProvider";
 
 const PrivateRoute = ({component:Component, ...restProps}) => {
-    const user = null;
+    const {user} = useFirebase();
     return <Route
         {...restProps}
         render={props => {
             return user ?
             <Component {...props} />
             :
-            <Navigate to='/login' />
+            <Redirect to={{ pathname: '/login' }} />
         }}
     />
 }

@@ -1,14 +1,15 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
+import EditProduct from './edit';
+import GridProduct from './grid';
 
 const Product = () => {
     
     return(
-        <div>
-            <nav>
-                <Link to="edit/1">Edit</Link>
-            </nav>
-        </div>
+        <Switch>
+            <Route path="/product/edit/:productId" component={EditProduct} />
+            <Route component={GridProduct} />
+        </Switch>
     );
 }
 

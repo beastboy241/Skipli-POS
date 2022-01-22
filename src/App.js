@@ -5,21 +5,25 @@ import Login from './pages/login';
 import ForgetPassword from './pages/forgetpassword';
 import NotFound from './pages/404';
 import Registration from './pages/registration';
-import Home from './pages/private/home';
+import PrivateRoute from './components/PrivateRoute';
+import FirebaseProvider from './components/FirebaseProvider';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/registration" component={Registration} />
-        <Route path="/forgetpassword" component={ForgetPassword} />
-        <Route path="/settings" component={Private} />
-        <Route path="/transaction" component={Private} />
-        <Route component={NotFound} />
-      </Switch>
-    </BrowserRouter>
+    <FirebaseProvider>
+      <BrowserRouter>
+        <Switch>
+          <PrivateRoute exact path="/" component={Private} />
+          <PrivateRoute path="/settings" component={Private} />
+          <PrivateRoute path="/product" component={Private} />
+          <PrivateRoute path="/transaction" component={Private} />
+          <Route path="/login" component={Login} />
+          <Route path="/registration" component={Registration} />
+          <Route path="/forgetpassword" component={ForgetPassword} />
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+    </FirebaseProvider>
   );
 }
 
