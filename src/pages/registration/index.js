@@ -97,8 +97,6 @@ function Registration() {
         return <Redirect to="/" />
     }
 
-    console.log(user);
-
     return (
         <Container maxWidth="xs">
             <Paper className={classes.paper}>
@@ -149,23 +147,23 @@ function Registration() {
                         disabled={isSubmitting}
                     />
                     <Grid container className={classes.buttons}>
-                        <Grid item xs={8}>
+                        <Grid item xs={9}>
                             <Button
                                 type="submit"
                                 color="primary"
                                 variant="contained"
-                                size="large"
+                                size="medium"
                                 disabled={isSubmitting}
                             >
                                 Daftar
                             </Button>
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={3}>
                             <Button
                                 component={Link}
                                 to="/login"
                                 variant="contained"
-                                size="large"
+                                size="medium"
                                 disabled={isSubmitting}
                             >
                                 Login
