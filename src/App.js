@@ -10,26 +10,29 @@ import FirebaseProvider from './components/FirebaseProvider';
 import CssBaseline from '@mui/material/CssBaseline';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import theme from './config/theme';
+import { SnackbarProvider } from 'notistack';
 
 function App() {
   return (
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <FirebaseProvider>
-          <BrowserRouter>
-            <Switch>
-              <PrivateRoute exact path="/" component={Private} />
-              <PrivateRoute path="/settings" component={Private} />
-              <PrivateRoute path="/product" component={Private} />
-              <PrivateRoute path="/transaction" component={Private} />
-              <Route path="/login" component={Login} />
-              <Route path="/registration" component={Registration} />
-              <Route path="/forgetpassword" component={ForgetPassword} />
-              <Route component={NotFound} />
-            </Switch>
-          </BrowserRouter>
-        </FirebaseProvider>
+        <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
+          <FirebaseProvider>
+            <BrowserRouter>
+              <Switch>
+                <PrivateRoute exact path="/" component={Private} />
+                <PrivateRoute path="/settings" component={Private} />
+                <PrivateRoute path="/product" component={Private} />
+                <PrivateRoute path="/transaction" component={Private} />
+                <Route path="/login" component={Login} />
+                <Route path="/registration" component={Registration} />
+                <Route path="/forgetpassword" component={ForgetPassword} />
+                <Route component={NotFound} />
+              </Switch>
+            </BrowserRouter>
+          </FirebaseProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </>
   );

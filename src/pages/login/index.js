@@ -6,7 +6,8 @@ import isEmail from 'validator/lib/isEmail';
 import { useFirebase } from '../../components/FirebaseProvider';
 import AppLoading from '../../components/apploading';
 
-function Login() {
+function Login(props) {
+    const { location } = props;
     const classes = useStyles();
 
     const [form, setForm] = useState({
@@ -44,11 +45,6 @@ function Login() {
         if (!form.password) {
             newError.password = 'Password wajib diisi';
         }
-        if (!form.ulangi_password) {
-            newError.ulangi_password = 'Ulangi Password wajib diisi';
-        } else if (form.ulangi_password !== form.password) {
-            newError.ulangi_password = 'Ulangi Password tidak sama dengan Password';
-        }
 
         return newError;
     }
@@ -63,18 +59,18 @@ function Login() {
             try {
                 setSubmitting(true);
                 await
-                    auth.createUserWithEmailAndPassword(form.email, form.password)
+                    auth.signInWithEmailAndPassword(form.email, form.password)
             } catch (e) {
                 const newError = {};
 
                 switch (e.code) {
-                    case 'auth/email-already-in-use': newError.email = 'Email sudah terdaftar';
+                    case 'auth/user-not-found': newError.email = 'Email belum terdaftar';
                         break;
                     case 'auth/invalid-email': newError.email = 'Email tidak valid';
                         break;
-                    case 'auth/weak-password': newError.password = 'Password lemah';
+                    case 'auth/wrong-password': newError.password = 'Password salah';
                         break;
-                    case 'auth/operation-not-allowed': newError.email = 'Metode email dan password tidak didukung';
+                    case 'auth/user-disabled': newError.email = 'Akun diblokir';
                         break;
                     default:
                         newError.email = 'Terjadi kesalahan silahkan coba lagi';
@@ -92,7 +88,8 @@ function Login() {
     }
 
     if (user) {
-        return <Redirect to="/" />
+        const redirecTo = location.state && location.state.from && location.state.from.pathname ? location.state.from.pathname : '/';
+        return <Redirect to={redirecTo} />
     }
 
     return (
@@ -154,6 +151,11 @@ function Login() {
                             </Button>
                         </Grid>
                     </Grid>
+                    <div className={classes.forget}>
+                        <Typography component={Link} to="/forgetpassword">
+                            Lupa Password ?
+                        </Typography>
+                    </div>
                 </form>
             </Paper>
         </Container>

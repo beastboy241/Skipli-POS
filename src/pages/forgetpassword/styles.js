@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({
     title:{
+        // color:theme.palette.primary.main
         textAlign: 'center',
         marginBottom: theme.spacing(3)
     },
@@ -11,9 +12,6 @@ const useStyles = makeStyles(theme => ({
     },
     buttons:{
         marginTop: theme.spacing(6)
-    },
-    forget:{
-        marginTop: theme.spacing(3)
     }
 }))
 
