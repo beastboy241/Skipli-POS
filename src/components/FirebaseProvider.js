@@ -27,7 +27,8 @@ function FirebaseProvider(props){
         storage,
         user,
         loading,
-        error
+        error,
+        
     }}>
     {props.children}
     </FirebaseContext.Provider>

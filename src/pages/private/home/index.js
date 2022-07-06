@@ -5,7 +5,7 @@ import { useFirebase } from "../../../components/FirebaseProvider";
 const Home = () => {
     const { auth } = useFirebase();
     return <>
-        <h1>Halaman Home</h1>
+        <h1>Main Home - Welcome </h1>
         <Button onClick={(e) => {
             auth.signOut()
         }}>SignOut</Button>

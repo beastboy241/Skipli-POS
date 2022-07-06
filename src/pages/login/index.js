@@ -38,12 +38,12 @@ function Login(props) {
     const validate = () => {
         const newError = { ...error };
         if (!form.email) {
-            newError.email = 'Email wajib diisi';
+            newError.email = 'Email is required';
         } else if (!isEmail(form.email)) {
-            newError.email = 'Email tidak valid';
+            newError.email = 'Email is not valid';
         }
         if (!form.password) {
-            newError.password = 'Password wajib diisi';
+            newError.password = 'Password required';
         }
 
         return newError;
@@ -64,16 +64,16 @@ function Login(props) {
                 const newError = {};
 
                 switch (e.code) {
-                    case 'auth/user-not-found': newError.email = 'Email belum terdaftar';
+                    case 'auth/user-not-found': newError.email = 'Email not registered';
                         break;
-                    case 'auth/invalid-email': newError.email = 'Email tidak valid';
+                    case 'auth/invalid-email': newError.email = 'Email is not valid';
                         break;
-                    case 'auth/wrong-password': newError.password = 'Password salah';
+                    case 'auth/wrong-password': newError.password = 'Wrong Password';
                         break;
-                    case 'auth/user-disabled': newError.email = 'Akun diblokir';
+                    case 'auth/user-disabled': newError.email = 'Account Blocked!';
                         break;
                     default:
-                        newError.email = 'Terjadi kesalahan silahkan coba lagi';
+                        newError.email = 'An error occurred please try again';
                         break;
                 }
 
@@ -104,7 +104,7 @@ function Login(props) {
                         type="email"
                         name="email"
                         margin="normal"
-                        label="Alamat Email"
+                        label="User Email"
                         fullWidth
                         required
                         value={form.email}
@@ -147,13 +147,13 @@ function Login(props) {
                                 size="medium"
                                 disabled={isSubmitting}
                             >
-                                Daftar
+                                Register
                             </Button>
                         </Grid>
                     </Grid>
                     <div className={classes.forget}>
                         <Typography component={Link} to="/forgetpassword">
-                            Lupa Password ?
+                            Forget Password
                         </Typography>
                     </div>
                 </form>

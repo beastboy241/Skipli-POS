@@ -38,9 +38,9 @@ function ForgetPassword() {
     const validate = () => {
         const newError = { ...error };
         if (!form.email) {
-            newError.email = 'Email wajib diisi';
+            newError.email = 'Email is required';
         } else if (!isEmail(form.email)) {
-            newError.email = 'Email tidak valid';
+            newError.email = 'Email is not valid';
         }
 
         return newError;
@@ -59,18 +59,18 @@ function ForgetPassword() {
                     url: `${window.location.origin}/login`
                 }
                 await auth.sendPasswordResetEmail(form.email, actionCodeSettings);
-                enqueueSnackbar(`Cek kotak masuk email ${form.email}, tautan untuk reset password telah dikirim`, { variant: 'success' })
+                enqueueSnackbar(`Check email inbox ${form.email}, The link to reset password has been sent`, { variant: 'success' })
                 setSubmitting(false);
             } catch (e) {
                 const newError = {};
 
                 switch (e.code) {
-                    case 'auth/user-not-found': newError.email = 'Email tidak terdaftar';
+                    case 'auth/user-not-found': newError.email = 'Email not registered';
                         break;
-                    case 'auth/invalid-email': newError.email = 'Email tidak valid';
+                    case 'auth/invalid-email': newError.email = 'Email is not valid';
                         break;
                     default:
-                        newError.email = 'Terjadi kesalahan silahkan coba lagi';
+                        newError.email = 'An error occurred please try again';
                         break;
                 }
 
@@ -92,7 +92,7 @@ function ForgetPassword() {
         <Container maxWidth="xs">
             <Paper className={classes.paper}>
                 <Typography variant="h5" component="h1" className={classes.title}>
-                    Lupa Password
+                Forget Password?
                 </Typography>
                 <form onSubmit={handleSubmit} noValidate>
                     <TextField
@@ -100,7 +100,7 @@ function ForgetPassword() {
                         type="email"
                         name="email"
                         margin="normal"
-                        label="Alamat Email"
+                        label="New Email"
                         fullWidth
                         required
                         value={form.email}
@@ -118,7 +118,7 @@ function ForgetPassword() {
                                 size="medium"
                                 disabled={isSubmitting}
                             >
-                                Kirim
+                                Send
                             </Button>
                         </Grid>
                         <Grid item xs={3}>

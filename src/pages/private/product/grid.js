@@ -2,7 +2,7 @@ import React from 'react';
 
 function GridProduct(){
     return(
-        <h1>Halaman Grid Product</h1>
+        <h1> Grid Product</h1>
     );
 }
 

@@ -1,8 +1,13 @@
 import React from 'react';
 
+
+
+
 function EditProduct(){
+ 
+
     return(
-        <h1>Halaman Edit Product</h1>
+        <h1>Edit Product</h1>
     );
 }
 

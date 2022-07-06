@@ -11,13 +11,13 @@ const NotFound = () => {
         <Container maxWidht="xs">
             <Paper className={classes.paper}>
                 <Typography variant="subtitle1">
-                    Halaman tidak ditemukan
+                    page not found
                 </Typography>
                 <Typography variant="h3">
                     404
                 </Typography>
-                <Typography component={Link} to="/">
-                    Kembali ke Beranda
+                <Typography component={Link} to="/">                
+                    Back to Home
                 </Typography>
             </Paper>
         </Container>

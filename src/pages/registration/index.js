@@ -12,7 +12,7 @@ function Registration() {
     const [form, setForm] = useState({
         email: '',
         password: '',
-        ulangi_password: ''
+        repeat_password: ''
     });
 
     const [isSubmitting, setSubmitting] = useState(false);
@@ -33,23 +33,23 @@ function Registration() {
     const [error, setError] = useState({
         email: '',
         password: '',
-        ulangi_password: ''
+        repeat_password: ''
     })
 
     const validate = () => {
         const newError = { ...error };
         if (!form.email) {
-            newError.email = 'Email wajib diisi';
+            newError.email = 'Email is required';
         } else if (!isEmail(form.email)) {
-            newError.email = 'Email tidak valid';
+            newError.email = 'Email is not valid';
         }
         if (!form.password) {
-            newError.password = 'Password wajib diisi';
+            newError.password = 'Password is required';
         }
-        if (!form.ulangi_password) {
-            newError.ulangi_password = 'Ulangi Password wajib diisi';
-        } else if (form.ulangi_password !== form.password) {
-            newError.ulangi_password = 'Ulangi Password tidak sama dengan Password';
+        if (!form.repeat_password) {
+            newError.repeat_password = 'Repeat Password is required';
+        } else if (form.repeat_password !== form.password) {
+            newError.repeat_password = 'Repeat Password is not the same as Password';
         }
 
         return newError;
@@ -70,16 +70,16 @@ function Registration() {
                 const newError = {};
 
                 switch (e.code) {
-                    case 'auth/email-already-in-use': newError.email = 'Email sudah terdaftar';
+                    case 'auth/email-already-in-use': newError.email = 'Email already registered';
                         break;
-                    case 'auth/invalid-email': newError.email = 'Email tidak valid';
+                    case 'auth/invalid-email': newError.email = 'Email is notvalid';
                         break;
-                    case 'auth/weak-password': newError.password = 'Password lemah';
+                    case 'auth/weak-password': newError.password = 'Password too weak ';
                         break;
-                    case 'auth/operation-not-allowed': newError.email = 'Metode email dan password tidak didukung';
+                    case 'auth/operation-not-allowed': newError.email = 'Email and password methods are not supported';
                         break;
                     default:
-                        newError.email = 'Terjadi kesalahan silahkan coba lagi';
+                        newError.email = 'An error occurred please try again';
                         break;
                 }
 
@@ -101,7 +101,7 @@ function Registration() {
         <Container maxWidth="xs">
             <Paper className={classes.paper}>
                 <Typography variant="h5" component="h1" className={classes.title}>
-                    Buat Akun Baru
+                    Create New Account
                 </Typography>
                 <form onSubmit={handleSubmit} noValidate>
                     <TextField
@@ -109,7 +109,7 @@ function Registration() {
                         type="email"
                         name="email"
                         margin="normal"
-                        label="Alamat Email"
+                        label= "New user Email"
                         fullWidth
                         required
                         value={form.email}
@@ -133,17 +133,17 @@ function Registration() {
                         disabled={isSubmitting}
                     />
                     <TextField
-                        id="ulangi_password"
+                        id="repeat_password"
                         type="password"
-                        name="ulangi_password"
+                        name="repeat_password"
                         margin="normal"
-                        label="Ulangi Password"
+                        label="Repeat Password"
                         fullWidth
                         required
-                        value={form.ulangi_password}
+                        value={form.repeat_password}
                         onChange={handleChange}
-                        helperText={error.ulangi_password}
-                        error={error.ulangi_password ? true : false}
+                        helperText={error.repeat_password}
+                        error={error.repeat_password ? true : false}
                         disabled={isSubmitting}
                     />
                     <Grid container className={classes.buttons}>
@@ -155,7 +155,7 @@ function Registration() {
                                 size="medium"
                                 disabled={isSubmitting}
                             >
-                                Daftar
+                                Register
                             </Button>
                         </Grid>
                         <Grid item xs={3}>

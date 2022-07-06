@@ -2,7 +2,7 @@ import React from 'react';
 
 function Store(){
     return(
-        <h1>Halaman Toko</h1>
+        <h1>Vietnamese Restaurant </h1>
     );
 }
 
