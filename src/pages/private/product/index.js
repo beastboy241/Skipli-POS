@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {Switch, Route} from 'react-router-dom';
-import CustomModal from "../../../components/CustomModal";
 import EditProduct from './edit';
 import GridProduct from './grid';
 
 
 
-const Product = () => {
+function Product() {
 
 
     return(

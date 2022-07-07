@@ -14,7 +14,7 @@ function AppLoading(){
                     component="h2"
                     className={classes.title}
                 >
-                    MaraPOS
+                    Restaurant POS
                 </Typography>
                 <LinierProgress />
             </div>
