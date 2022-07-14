@@ -127,11 +127,13 @@ function Home() {
     }
 
   }
- 
-  const removeItem = k => e => {
-    let item = transaction.items[k]
-    item.remove()
+  
+  const itemRemove =  k => e => {
+    let currItem = transaction.items[k]
+    currItem.remove()
+
   }
+  
   
   const handleChangeAmount = k => e => {
     let newItem = {...transaction.items[k]}
@@ -143,6 +145,8 @@ function Home() {
       ...transaction.items,
       [k]: newItem
     }
+
+
 
     const productDoc = productItems.find(item => item.id === k)
     const productData = productDoc.data()
@@ -242,7 +246,7 @@ function Home() {
                   disabled={isSubmitting}
                 >
                   <SaveIcon className={classes.iconLeft} />
-                  Save Transaction
+                    Checkout
                 </Button>
               </Grid>
             </Grid>
@@ -273,7 +277,7 @@ function Home() {
                             </TableCell>
                             <TableCell>{currency(item.price)}</TableCell>
                             <TableCell>{currency(item.subtotal)}</TableCell>
-                            <TableCell><Button variant="contained" color="Info" onClick={removeItem(k)}> Remove </Button></TableCell>
+                            <TableCell><Button variant="contained" color="Info" onClick={itemRemove(item)}> Remove </Button></TableCell>
                           </TableRow>
                         )
                       })
