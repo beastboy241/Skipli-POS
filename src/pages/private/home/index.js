@@ -33,6 +33,7 @@ import { useSnackbar } from 'notistack';
 import { currency } from '../../../utils/formatter'
 
 import format from 'date-fns/format'
+import ka from 'date-fns/locale/ka';
 
 function Home() {
 
@@ -129,8 +130,26 @@ function Home() {
   }
   
   const itemRemove =  k => e => {
-    let currItem = transaction.items[k]
-    currItem.remove()
+    let currItem = { ...transaction.items[k.id] }
+    
+
+  
+    const currItems = {
+      ...transaction.items,
+      [k.id]: currItem
+    }
+    setTransaction({
+      ...transaction,
+      items: {
+        
+      },
+      total: Object.keys(currItems).reduce((total, k) => {
+        const item = currItems[k]
+        return total - parseInt(item.subtotal)
+      })
+    })
+    
+  
 
   }
   
@@ -248,6 +267,7 @@ function Home() {
                   <SaveIcon className={classes.iconLeft} />
                     Checkout
                 </Button>
+                
               </Grid>
             </Grid>
             <Grid container spacing={5}>
@@ -264,7 +284,9 @@ function Home() {
                       Object.keys(transaction.items).map(k => {
                         const item = transaction.items[k]
                         return (
+
                           <TableRow key={k}>
+                            
                             <TableCell>{item.name}</TableCell>
                             <TableCell>
                               <TextField
@@ -277,8 +299,9 @@ function Home() {
                             </TableCell>
                             <TableCell>{currency(item.price)}</TableCell>
                             <TableCell>{currency(item.subtotal)}</TableCell>
-                            <TableCell><Button variant="contained" color="Info" onClick={itemRemove(item)}> Remove </Button></TableCell>
+                            <Button variant="contained" color="Info" onClick={itemRemove(k)}> Clear </Button>
                           </TableRow>
+                          
                         )
                       })
                     }
