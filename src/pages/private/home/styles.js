@@ -2,12 +2,12 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
 
-  produkList: {
+  productList: {
     backgroundColor: theme.palette.background.paper,
     maxHeight: 500,
     overflow: 'auto'
   },
-  inputJumlah: {
+  inputAmount: {
     width: 45,
   },
   iconLeft: {

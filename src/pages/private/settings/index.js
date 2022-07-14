@@ -1,10 +1,14 @@
-import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import User from './user';
-import Store from './store';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Paper from '@mui/material/Paper';
+import React from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+// metarial-ui
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
+
+import Restaurant from './restaurant'
+import User from './user'
+
 import useStyles from "./styles";
 
 const Settings = (props) => {
@@ -15,7 +19,7 @@ const Settings = (props) => {
     const classes = useStyles();
 
     return (
-        <Paper square>
+        <Paper>
             <Tabs
                 value={location.pathname}
                 indicatorColor="primary"
@@ -23,12 +27,12 @@ const Settings = (props) => {
                 onChange={handleChangeTab}
             >
                 <Tab label="User" value="/settings/user" />
-                <Tab label="Store" value="/settings/store" />
+                {/*<Tab label="Restaurant" value="/settings/restaurant" />*/}
             </Tabs>
             <div className={classes.tabContent}>
                 <Switch>
                     <Route path="/settings/user" component={User} />
-                    <Route path="/settings/store" component={Store} />
+                    <Route path="/settings/restaurant" component={Restaurant} />
                     <Redirect to="/settings/user" />
                 </Switch>
             </div>

@@ -17,12 +17,12 @@ import useStyles from './styles/grid'
 import AddDialog from './add';
 
 import { useFirebase } from '../../../components/FirebaseProvider'
-import AppPageLoading from '../../../components/AppPageLoading'
+import AppLoading from '../../../components/AppPageLoading'
 import { useCollection } from 'react-firebase-hooks/firestore'
 
 import { Link } from 'react-router-dom'
 import { currency } from '../../../utils/formatter'
-
+import { useSnackbar } from 'notistack'
 
 
 function GridProduct(){
@@ -32,6 +32,7 @@ function GridProduct(){
     const [snapshot, loading] = useCollection(productRef)
     const [productItems, setProductItems] = useState([])
     const [openAddDialog, setOpenAddDialog] = useState(false)
+    const { enqueueSnackbar } = useSnackbar()
 
     useEffect(() => {
         if (snapshot) {
@@ -40,16 +41,38 @@ function GridProduct(){
     }, [snapshot])
 
     if (loading) {
-        return <AppPageLoading/>
+        return <AppLoading/>
     }
 
-    const handleDelete = productDoc => async e => {
+    const handleDelete = (id) => async e => {
         if (window.confirm('Are you sure to remove this product?')) {
-            await productDoc.ref.delete()
-            const photoURL = productDoc.data().photo
+            productRef.doc(id)
+            .delete()
+            .catch(err => {
+                enqueueSnackbar(err.message, {variant: 'error'})
+            })
+            const photoURL = id.data().photo
             if (photoURL) {
                 await storage.refFromURL(photoURL).delete()
             }
+            //await productDoc.ref.delete
+            /* 
+            var query = productRef.productDoc.id.get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                   // let id = doc.id;
+                   // let data = doc.data()
+                    console.log(doc.id, '=>', doc.data());
+                    var deleteDoc = productRef.doc(doc.id).delete();
+                    enqueueSnackbar('Product data is deleted', {variant: 'success'})
+                    setSomethingChange(false)
+                })
+            }) 
+            */
+        
+            
+            
+            
         }
     }
 
@@ -60,7 +83,7 @@ function GridProduct(){
 
     return(
         <>
-        <h1> Grid Product</h1>
+        <h1> Menu Product</h1>
             <Typography
               variant="h5"
               component="h1"
@@ -86,12 +109,13 @@ function GridProduct(){
                         >
                         <Card className={classes.card}>
                             {
-                            productData.photo && <CardMedia className={classes.photo} image={productData.photo} title={productData.name}/>
-                            }
+                            productData.photo && <CardMedia src={productData.photo} className={classes.media} component="img" height="110" title={productData.name}/>
+                            } 
                             {
                                 !productData.photo && <div className={classes.photoPlaceholder}><ImageIcon size="large" color="disabled" /> </div>
                             }
                             <CardContent className={classes.productDetails}>
+                                
                             <Typography variant="h5"
                                         noWrap>
                                 {productData.name}
@@ -107,7 +131,7 @@ function GridProduct(){
                                 <IconButton component={Link} to={`/product/edit/${productDoc.id}`}>
                                     <EditIcon/>
                                 </IconButton>
-                                <IconButton onClick={handleDelete(productDoc)}>
+                                <IconButton onClick={handleDelete(`${productDoc.id}`) }>
                                     <DeleteIcon/>
                                 </IconButton>
                             </CardActions>

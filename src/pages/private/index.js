@@ -1,31 +1,36 @@
-import * as React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
-import StoreIcon from '@mui/icons-material/Store';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import SignOutIcon from '@mui/icons-material/ExitToApp';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { Switch, Route } from 'react-router-dom';
-import Settings from './settings';
-import Product from './product';
-import Transaction from './transaction';
-import Home from './home';
-import AppBar from './styles';
-import Drawer from './styles2';
+import React from 'react';
+import clsx from 'clsx';
+import Drawer from '@material-ui/core/Drawer';
+import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Container from '@material-ui/core/Container';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import SignOutIcon from '@material-ui/icons/ExitToApp';
+
 import { useFirebase } from '../../components/FirebaseProvider';
+import { Switch, Route, Link} from 'react-router-dom'
+
+// import Icon icon
+import HomeIcon from '@material-ui/icons/Home';
+import StoreIcon from '@material-ui/icons/Store';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import SettingsIcon from '@material-ui/icons/Settings';
+
+import Settings from './settings'
+import Product from './product'
+import Transaction from './transaction'
+import Home from './home'
+
+import useStyles from './styles';
 
 function Copyright(props) {
     return (
@@ -40,158 +45,108 @@ function Copyright(props) {
     );
 }
 
-const mdTheme = createTheme();
-
-function Private() {
-    const [open, setOpen] = React.useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+export default function Dashboard() {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
     const { auth } = useFirebase();
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
     const handleSignOut = (e) => {
-        auth.signOut();
+        if (window.confirm('Are you sure you want to exit the application?')) {
+            auth.signOut();
+        }
     }
-
     return (
-        <ThemeProvider theme={mdTheme}>
-            <Box sx={{ display: 'flex' }}>
-                <AppBar position="absolute" open={open}>
-                    <Toolbar
-                        sx={{
-                            pr: '24px', // keep right padding when drawer closed
-                        }}
-                    >
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={toggleDrawer}
-                            sx={{
-                                marginRight: '36px',
-                                ...(open && { display: 'none' }),
-                            }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{ flexGrow: 1 }}
-                        >
-                            <Switch>
-                                <Route path="/" exact children="Home" />
-                                <Route path="/product" children="Product" />
-                                <Route path="/transaction" children="Transaction" />
-                                <Route path="/settings" children="Settings" />
-                            </Switch>
-                        </Typography>
-                        <IconButton onClick={handleSignOut} color="inherit">
-                            <SignOutIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <Toolbar
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            px: [1],
-                        }}
-                    >
-                        <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <Divider />
-                    <List>
-                        <Route path="/" exact children={({ match, history }) => {
-                            return <ListItem 
-                            button
-                            selected={match?true:false}
-                            onClick={() => {
-                                history.push('/')
-                            }}
-                            >
-                                <ListItemIcon>
-                                    <HomeIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Home" />
-                            </ListItem>
-                        }} />
-                        <Route path="/product" children={({ match, history }) => {
-                            return <ListItem 
-                            button
-                            selected={match?true:false}
-                            onClick={() => {
-                                history.push('/product')
-                            }}
-                            >
-                                <ListItemIcon>
-                                    <StoreIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Product" />
-                            </ListItem>
-                        }} />
-                        <Route path="/transaction" children={({ match, history }) => {
-                            return <ListItem 
-                            button
-                            selected={match?true:false}
-                            onClick={() => {
-                                history.push('/transaction')
-                            }}
-                            >
-                                <ListItemIcon>
-                                    <ShoppingCartIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Transaction" />
-                            </ListItem>
-                        }} />
-                        <Route path="/settings" children={({ match, history }) => {
-                            return <ListItem 
-                            button
-                            selected={match?true:false}
-                            onClick={() => {
-                                history.push('/settings')
-                            }}
-                            >
-                                <ListItemIcon>
-                                    <SettingsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Settings" />
-                            </ListItem>
-                        }} />
-                    </List>
-                </Drawer>
-                <Box
-                    component="main"
-                    sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[100]
-                                : theme.palette.grey[900],
-                        flexGrow: 1,
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
-                    <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Switch>
-                            <Route path="/settings" component={Settings} />
-                            <Route path="/product" component={Product} />
-                            <Route path="/transaction" component={Transaction} />
-                            <Route component={Home} />
-                        </Switch>
-
-                        <Copyright sx={{ pt: 4 }} />
-                    </Container>
-                </Box>
-            </Box>
-        </ThemeProvider>
-    );
+        <div className={classes.root}>
+          <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+            <Toolbar className={classes.toolbar}>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                <Switch>
+                  <Route path="/product" children="Product"/>
+                  <Route path="/transaction" children="Transaction"/>
+                  <Route path="/settings" children="Settings"/>
+                  <Route children="Home"/>
+                </Switch>
+              </Typography>
+              <IconButton
+                color="inherit"
+                onClick={handleSignOut}
+              >
+                <SignOutIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            variant="permanent"
+            classes={{
+              paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+            }}
+            open={open}
+          >
+            <div className={classes.toolbarIcon}>
+              <IconButton onClick={handleDrawerClose}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </div>
+            <Divider />
+              <List>
+                <Route path="/" exact children={({match, history})=>{
+                  return  <ListItem button selected={match? true:false} onClick={()=>{history.push('/')}}>
+                            <ListItemIcon><HomeIcon /></ListItemIcon>
+                            <ListItemText primary="Home" />
+                          </ListItem>
+                }} />
+                <Route path="/produk" children={({match, history})=>{
+                  return  <ListItem button selected={match? true:false} onClick={()=>{history.push('/product')}}>
+                            <ListItemIcon><StoreIcon /></ListItemIcon>
+                            <ListItemText primary="Product" />
+                          </ListItem>
+                }} />
+                <Route path="/transaction" children={({match, history})=>{
+                  return  <ListItem button selected={match? true:false} onClick={()=>{history.push('/transaction')}}>
+                            <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
+                            <ListItemText primary="Transaction" />
+                          </ListItem>
+                }} />
+                <Route path="/settings" children={({match, history})=>{
+                  return  <ListItem button selected={match? true:false} onClick={()=>{history.push('/settings')}}>
+                            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                            <ListItemText primary="Settings" />
+                          </ListItem>
+                }} />
+              </List>
+              
+          </Drawer>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <Container maxWidth="lg" className={classes.container}>
+              <Switch>
+                <Route path="/settings" component={Settings} />
+                <Route path="/product" component={Product} />
+                <Route path="/transaction" component={Transaction} />
+                <Route component={Home} />
+              </Switch>
+            </Container>
+          </main>
+        </div>
+        
+      );
 }
 
-export default Private;
+
+
+// 

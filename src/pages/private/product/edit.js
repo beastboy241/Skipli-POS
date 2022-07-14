@@ -11,7 +11,7 @@ import SaveIcon from '@material-ui/icons/Save'
 import { useFirebase } from '../../../components/FirebaseProvider'
 import { useDocument } from 'react-firebase-hooks/firestore'
 
-import AppPageLoading from '../../../components/AppPageLoading'
+import AppLoading from '../../../components/AppPageLoading'
 import { useSnackbar } from 'notistack'
 
 import useStyles from './styles/edit'
@@ -102,7 +102,7 @@ function EditProduct({match}) {
     }
 
     if (loading) {
-        return <AppPageLoading/>
+        return <AppLoading/>
     }
     
     const handleUploadFile = async (e) => {
@@ -260,7 +260,7 @@ function EditProduct({match}) {
                                     src={form.photo}
                                     className={classes.previewProductPhoto}
                                     alt={`Product Photo ${form.name}`}
-                                  />
+                                    />
                   }
                   <input
                     className={classes.hideInputFile}

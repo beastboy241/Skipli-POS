@@ -10,18 +10,18 @@ const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex'
   },
-  foto: {
+  photo: {
     width: 150
   },
-  fotoPlaceholder: {
+  photoPlaceholder: {
     width: 150,
     alignSelf: 'center',
     textAlign: 'center'
   },
-  produkDetails: {
-    flex: '2 0 auto'
+  productDetails: {
+    flex: '3 0 auto'
   },
-  produkActions: {
+  productActions: {
     flexDirection: 'column'
   }
 
